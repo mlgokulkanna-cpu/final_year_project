@@ -1,0 +1,164 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+                    body {
+                    width: 100%;
+                    height: 1065px;
+                    margin: 0;
+                    background-color: #537ea5;
+                    color: #284263;
+                    font-family: sans-serif;
+                    font-size: 16px;
+                }
+
+                .container {
+                    width: 50%;
+                    max-width: 1960px;
+                    min-width: 1080px;
+                    margin: 0 auto;
+                    background-image: url("/static/images/P.jpg");
+                    }
+
+                h1 {
+                    margin: 1em auto;
+                    text-align: center;
+                    padding: 20px;
+                    color: #191970;
+                }
+
+                p {
+                    margin: 2em 6em;
+                    text-align: center;
+                }
+
+                form {
+                    width: 60vw;
+                    max-width: 825px;
+                    min-width: 600px;
+                    margin: 0 auto;
+                    padding-bottom: 1em;
+                }
+
+                label {
+                    display: block;
+                    margin: 0.5rem 0;
+                }
+
+                input, textarea, select {
+                margin: 10px 0;
+                width: 100%;
+                min-height: 5em;
+                display: block;
+                min-height: 3em;
+                }
+
+                input, textarea {
+                background-color: #112845;
+                border: 1px solid #0a0a23;
+                color: #ffffff;
+                }
+
+                .submit {
+                display: block;
+                width: 150px;
+                margin: 1em auto;
+                height: 2em;
+                font-size: 1.1rem;
+                background-color: #000000;
+                border-color: white;
+                color: #ffffff;
+                min-width: 100px;
+                }
+
+                fieldset {
+                border: none;
+                border-top: 3px solid #FF8C00;
+                margin: 3rem;
+                filter: blur(1px);
+                }
+
+                .inline {
+                    width: unset;
+                    display: inline;
+                    margin-right: 0.5em;
+                    margin-left: 0;
+                    margin-top: 0;
+                    margin-bottom: 0;
+                }
+    </style>
+</head>
+<body>
+    <!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="styles.css" type="text/css">
+<title>SURVEY FORM</title>
+</head>
+<body>
+<div class="container">
+<h1 id="title">PERSONAL INFORMATION FORM</h1>
+<p id="description">
+    Personal information is data that identifies or relates to an individual, such as their name, address, phone number, or any other details that can be used to distinguish or contact them.</p>
+<fieldset>
+</fieldset>
+<form method='POST' action="{% url 'Per_Info_8' %}">
+    {% csrf_token %}
+
+
+            <label id="name-label" for="name">FIRST_NAME</label>
+            <input id="name" type="text" placeholder="ENTER YOUR firstname" name="firstname" required>
+            
+            <label id="name-label" for="name">LAST_NAME</label>
+            <input id="name" type="text" placeholder="ENTER YOUR lastname" name="lastname" required>
+     
+            <label id="name-label" for="name">AGE</label>
+            <input id="name" type="number" placeholder="ENTER YOUR age" name="age" required>
+            
+            <label id="name-label" for="name">ADDRESS</label>
+            <input id="name" type="textarea" placeholder="Enter your address" name="address" required>
+            
+            <label id="name-label" for="name">PHONE_NUMBER</label>
+            <input id="name" type="number" placeholder="Enter your phone number" name="phone" required>
+            
+            <label id="name-label" for="name">CITY</label>
+            <input id="name" type="text" placeholder="Enter your city name" name="city" required>
+            
+            <label id="name-label" for="name">STATE</label>
+            <input id="name" type="text" placeholder="Enter your state name" name="state" required>
+            
+            <label id="name-label" for="name">NATIONALITY</label>
+            <input id="name" type="text" placeholder="Enter your country name" name="country" required>
+
+
+            
+            
+            <button id="submit" type="submit" class="submit"><b>SUBMIT</b></button>
+  </form>
+  </div>
+  </body>
+</html>
+</body>
+</html>
+
+
+            {% comment %} <label for="referrer">How did you hear about us?
+            <select id="dropdown" name="dropdown">
+            <option value=" ">(select one)</option>
+            <option value="1">Facebook</option>
+            <option value="2">Instagram</option>
+            <option value="3">Twitter</option>
+            <option value="4">Other</option>
+            </select> 
+            <br />
+            </label>
+            <label id="gender"><input type="radio" value="1" name="first-choice" class="inline"> Option 1</label>
+            <label><input type="radio" value="2" name="second-choice" class="inline"> Option 2</label>
+            <label><input type="radio" value="1" name="first-choice" class="inline"> Option 3</label>
+            <label><input type="radio" value="2" name="second-choice" class="inline"> Option 4</label> {% endcomment %}

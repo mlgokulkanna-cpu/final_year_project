@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kidney Disease Prediction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .login__content {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+
+        .login__title {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .login__inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .login__inputs > div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login__label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .login__input {
+            padding: 12px 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .login__input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .login__input:hover {
+            border-color: #999;
+        }
+
+        .range-hint {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .login__buttons {
+            text-align: center;
+        }
+
+        .login__button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .login__button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .login__button:active {
+            transform: translateY(0);
+        }
+
+        /* Error styling */
+        .login__input:invalid {
+            border-color: #ff6b6b;
+        }
+
+        .login__input:invalid:focus {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+        }
+
+        /* Tooltip for range info */
+        .info-tooltip {
+            display: inline-block;
+            margin-left: 5px;
+            color: #667eea;
+            cursor: help;
+            position: relative;
+        }
+
+        .info-tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            white-space: nowrap;
+            z-index: 10;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login__content">
+            <form action="{% url 'Deploy_9' %}" method="POST" class="login__form" id="predictionForm">
+                {% csrf_token %}
+                <h1 class="login__title">KIDNEY DISEASE PREDICTION MODEL</h1>
+
+                <div class="login__inputs">
+                    <!-- Blood Pressure -->
+                    <div>
+                        <label class="login__label">
+                            Blood Pressure (BP)
+                            <span class="info-tooltip" data-tooltip="Range: 50-180 mmHg">ⓘ</span>
+                        </label>
+                        <input type="number" 
+                               name="Bp" 
+                               placeholder="Enter Blood Pressure"
+                               min="50" 
+                               max="180" 
+                               step="1"
+                               value="80"
+                               required 
+                               class="login__input" />
+                        <span class="range-hint">Valid range: 50 - 180 mmHg</span>
+                    </div>
+
+                    <!-- Specific Gravity -->
+                    <div>
+                        <label class="login__label">
+                            Specific Gravity (Sg)
+                            <span class="info-tooltip" data-tooltip="Range: 1.005-1.025">ⓘ</span>
+                        </label>
+                        <input type="number" 
+                               name="Sg" 
+                               placeholder="Enter Specific Gravity"
+                               min="1.005" 
+                               max="1.025" 
+                               step="0.005"
+                               value="1.020"
+                               required 
+                               class="login__input" />
+                        <span class="range-hint">Valid range: 1.005 - 1.025</span>
+                    </div>
+
+                    <!-- Albumin -->
+                    <div>
+                        <label class="login__label">
+                            Albumin (Al)
+                            <span class="info-tooltip" data-tooltip="Range: 0-5">ⓘ</span>
+                        </label>
+                        <input type="number" 
+                               name="Al" 
+                               placeholder="Enter Albumin"
+                               min="0" 
+                               max="5" 
+                               step="1"
+                               value="0"
+                               required 
+                               class="login__input" />
+                        <span class="range-hint">Valid range: 0 - 5</span>
+                    </div>
+
+                    <!-- Sugar -->
+                    <div>
+                        <label class="login__label">
+                            Sugar (Su)
+                            <span class="info-tooltip" data-tooltip="Range: 0-5">ⓘ</span>
+                        </label>
+                        <input type="number" 
+                               name="Su" 
+                               placeholder="Enter Sugar"
+                               min="0" 
+                               max="5" 
+                               step="1"
+                               value="0"
+                               required 
+                               class="login__input" />
+                        <span class="range-hint">Valid range: 0 - 5</span>
+                    </div>
+
+                    <!-- Red Blood Cells -->
+                    <div>
+                        <label class="login__label">
+                            Red Blood Cells (Rbc)
+                            <span class="info-tooltip" data-tooltip="0=abnormal, 1=normal">ⓘ</span>
+                        </label>
+                        <input type="number" 
+                               name="Rbc" 
+                               placeholder="Enter Rbc (0 or 1)"
+                               min="0" 
+                               max="1" 
+                               step="1"
+                               value="1"
+                               required 
+                               class="login__input" />
+                        <span class="range-hint">0 = Abnormal, 1 = Normal</span>
+                    </div>
+
+                    <!-- Blood Urea -->
+                    <div>
+                        <label class="login__label">
+                            Blood Urea (Bu)
+                            <span class="info-tooltip" data-tooltip="Range: 1.5-391 mg/dL">ⓘ</span>
+                        </label>
+                        <input type="number" 
+                               name="Bu" 
+                               placeholder="Enter Blood Urea"
+                               min="1.5" 
+                               max="400" 
+                               step="0.1"
+                               value="36"
+                               required 
+                               class="login__input" />
+                        <span class="range-hint">Valid range: 1.5 - 400 mg/dL</span>
+                    </div>
+
+                    <!-- Serum Creatinine -->
+                    <div>
+                        <label class="login__label">
+                            Serum Creatinine (Sc)
+                            <span class="info-tooltip" data-tooltip="Range: 0.4-76 mg/dL">ⓘ</span>
+                        </label>
+                        <input type="number" 
+                               name="Sc" 
+                               placeholder="Enter Serum Creatinine"
+                               min="0.4" 
+                               max="80" 
+                               step="0.1"
+                               value="1.2"
+                               required 
+                               class="login__input" />
+                        <span class="range-hint">Valid range: 0.4 - 80 mg/dL</span>
+                    </div>
+
+                    <!-- Sodium -->
+                    <div>
+                        <label class="login__label">
+                            Sodium (Sod)
+                            <span class="info-tooltip" data-tooltip="Range: 104-163 mEq/L">ⓘ</span>
+                        </label>
+                        <input type="number" 
+                               name="Sod" 
+                               placeholder="Enter Sodium"
+                               min="104" 
+                               max="163" 
+                               step="0.1"
+                               value="137"
+                               required 
+                               class="login__input" />
+                        <span class="range-hint">Valid range: 104 - 163 mEq/L</span>
+                    </div>
+
+                    <!-- Potassium -->
+                    <div>
+                        <label class="login__label">
+                            Potassium (Pot)
+                            <span class="info-tooltip" data-tooltip="Range: 2.5-47 mEq/L">ⓘ</span>
+                        </label>
+                        <input type="number" 
+                               name="Pot" 
+                               placeholder="Enter Potassium"
+                               min="2.5" 
+                               max="50" 
+                               step="0.1"
+                               value="4.5"
+                               required 
+                               class="login__input" />
+                        <span class="range-hint">Valid range: 2.5 - 50 mEq/L</span>
+                    </div>
+
+                    <!-- Hemoglobin -->
+                    <div>
+                        <label class="login__label">
+                            Hemoglobin (Hemo)
+                            <span class="info-tooltip" data-tooltip="Range: 3.1-17.8 g/dL">ⓘ</span>
+                        </label>
+                        <input type="number" 
+                               name="Hemo" 
+                               placeholder="Enter Hemoglobin"
+                               min="3.1" 
+                               max="18" 
+                               step="0.1"
+                               value="12.5"
+                               required 
+                               class="login__input" />
+                        <span class="range-hint">Valid range: 3.1 - 18 g/dL</span>
+                    </div>
+
+                    <!-- White Blood Cell Count -->
+                    <div>
+                        <label class="login__label">
+                            White Blood Cell Count (Wbcc)
+                            <span class="info-tooltip" data-tooltip="Range: 2200-26400 cells/mm³">ⓘ</span>
+                        </label>
+                        <input type="number" 
+                               name="Wbcc" 
+                               placeholder="Enter WBC Count"
+                               min="2200" 
+                               max="27000" 
+                               step="100"
+                               value="8400"
+                               required 
+                               class="login__input" />
+                        <span class="range-hint">Valid range: 2200 - 27000 cells/mm³</span>
+                    </div>
+
+                    <!-- Red Blood Cell Count -->
+                    <div>
+                        <label class="login__label">
+                            Red Blood Cell Count (Rbcc)
+                            <span class="info-tooltip" data-tooltip="Range: 2.1-8 million cells/mm³">ⓘ</span>
+                        </label>
+                        <input type="number" 
+                               name="Rbcc" 
+                               placeholder="Enter RBC Count"
+                               min="2.1" 
+                               max="8" 
+                               step="0.1"
+                               value="4.7"
+                               required 
+                               class="login__input" />
+                        <span class="range-hint">Valid range: 2.1 - 8 million cells/mm³</span>
+                    </div>
+
+                    <!-- Hypertension -->
+                    <div>
+                        <label class="login__label">
+                            Hypertension (Htn)
+                            <span class="info-tooltip" data-tooltip="0=no, 1=yes">ⓘ</span>
+                        </label>
+                        <input type="number" 
+                               name="Htn" 
+                               placeholder="Enter Hypertension (0 or 1)"
+                               min="0" 
+                               max="1" 
+                               step="1"
+                               value="0"
+                               required 
+                               class="login__input" />
+                        <span class="range-hint">0 = No, 1 = Yes</span>
+                    </div>
+                </div>
+
+                <div class="login__buttons">
+                    <button type="submit" class="login__button">Predict Kidney Disease</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Additional client-side validation
+        document.getElementById('predictionForm').addEventListener('submit', function(e) {
+            const inputs = this.querySelectorAll('input[type="number"]');
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                const value = parseFloat(input.value);
+                const min = parseFloat(input.min);
+                const max = parseFloat(input.max);
+                
+                if (value < min || value > max) {
+                    isValid = false;
+                    input.style.borderColor = '#ff6b6b';
+                    
+                    // Show alert for first invalid input
+                    if (isValid === false) {
+                        e.preventDefault();
+                        alert(`Please enter a valid value for ${input.previousElementSibling.textContent.trim()} between ${min} and ${max}`);
+                        input.focus();
+                    }
+                } else {
+                    input.style.borderColor = '#e1e1e1';
+                }
+            });
+            
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+
+        // Reset border color on input
+        document.querySelectorAll('.login__input').forEach(input => {
+            input.addEventListener('input', function() {
+                this.style.borderColor = '#e1e1e1';
+            });
+        });
+    </script>
+</body>
+</html>
